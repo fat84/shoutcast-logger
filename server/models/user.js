@@ -9,12 +9,12 @@ const bcrypt = require('bcryptjs');
 const UserSchema = new Schema({
 	first_name: {
 		type: String,
-		required: true,
+		required: false,
 		minlength: 2
 	},
 	last_name: {
 		type: String,
-		required: true,
+		required: false,
 		minlength: 2
 	},
 	username: {
@@ -48,6 +48,7 @@ const UserSchema = new Schema({
 		required: true,
 		minlength: 6
 	},
+	stations: [ String ],
 	tokens: [{
 		access: {
 			type: String,
@@ -76,6 +77,17 @@ UserSchema.methods.generateAuthToken = function () {
 
 	user.tokens = user.tokens.concat([{ access, token }]);
 	return user.save().then(() => token)
+}
+
+// method that removes tokend that is used to validate auth
+UserSchema.methods.removeToken = function(token) {
+	let user = this;
+
+	return user.updateOne({
+		$pull: {
+			tokens: { token }
+		}
+	})
 }
 
 // method that finds user by token property

@@ -2,15 +2,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const config = require('./config');
+const setMetaListener= require('../utils/setMetaListener');
 
 
 //set up mongoDB
-
 require('./models/user');
 mongoose.Promise = global.Promise;
 mongoose.set('useCreateIndex', true);
 mongoose.connect(config.mongoUri, { useNewUrlParser: true });
 
+//start listenintg for meta-data changes in stations
+//setMetaListener();
 
 // set up server
 const app = express();

@@ -3,8 +3,14 @@ const Schema = mongoose.Schema;
 
 
 const stationSchema = new Schema({
-    station: String,
-    url: String,
+    name: {
+       type: String,
+       required: true
+    },
+    url: {
+       type: String,
+       required: true
+    },
 }, { collection: 'stations' })
 
 module.exports = mongoose.model('stations', stationSchema);

@@ -2,12 +2,26 @@ const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 
 const songSchema = new Schema({
-	artist: String,
-	title: String,
-   time: {
-      type: String
+	artist: {
+      type: String,
+      required: true
    },
-   stationIds: [String]
+	title: {
+      type: String,
+      required: true
+   },
+	active_listeners: {
+      type: Number,
+      required: true
+   },
+   stationId: {
+      type: String,
+      required: true
+   },
+   time: {
+      type: Date,
+      default: Date.now
+   }
 }, { collection: 'songs' });
 
 module.exports = mongoose.model('songs', songSchema);
