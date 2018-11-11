@@ -48,7 +48,7 @@ const UserSchema = new Schema({
 		required: true,
 		minlength: 6
 	},
-	stations: [ String ],
+	stationIds: [ String ],
 	tokens: [{
 		access: {
 			type: String,
@@ -66,7 +66,7 @@ UserSchema.methods.toJSON = function () {
 	let user = this;
 	let userObject = user.toObject();
 
-	return _.pick(userObject, ['_id', 'email', 'first_name', 'last_name', 'username'])
+	return _.pick(userObject, ['_id', 'email', 'first_name', 'last_name', 'username', 'stationIds'])
 }
 
 // method that generates token that is used to validate auth

@@ -12,6 +12,11 @@ const users = [{
 	last_name: 'Testis',
 	email: 'test1@test.com',
 	password: 'userOnePass',
+	stationIds: [
+		 "5be570329d81dab4e445172b",
+		 "5be5705d9d81dab4e4451aa4",
+		 "5be570829d81dab4e4451dce"
+	],
 	tokens: [{
 		access: 'auth',
 		token: jwt.sign({ _id: userOneId.toHexString(), access: 'auth' }, 'secret').toString()
@@ -23,6 +28,11 @@ const users = [{
 	last_name: 'Testisara',
 	email: 'test2@test.com',
 	password: 'userTwoPass',
+	stationIds: [
+		 "5be570329d81dab4e445172b",
+		 "5be5705d9d81dab4e4451aa4",
+		 "5be570829d81dab4e4451dce"
+	],
 	tokens: [{
 		access: 'auth',
 		token: jwt.sign({ _id: userTwoId.toHexString(), access: 'auth' }, 'secret').toString()

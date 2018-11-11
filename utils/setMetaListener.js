@@ -1,8 +1,8 @@
 var radio = require('radio-stream');
 var parseMetaData = require('./parseMetaData');
 var getListeners = require('./getListeners');
-var Station = require('../server/models/station');
-var Song = require('../server/models/song');
+var Station = require('../models/station');
+var Song = require('../models/song');
 
 // find all stations from "stations collection, prepare event listener 
 // and insert new data to "songs" collection

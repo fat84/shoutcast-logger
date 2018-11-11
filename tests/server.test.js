@@ -26,7 +26,7 @@ describe('GET /api/auth/user', () => {
 			.get('/api/auth/user')
 			.expect(401)
 			.expect((res) => {
-				expect(res.body.error).toBe("invalid token")
+				expect(res.body.error).toBeTruthy()
 			})
 			.end(done)
 	})

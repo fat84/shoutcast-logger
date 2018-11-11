@@ -13,4 +13,6 @@ const stationSchema = new Schema({
     },
 }, { collection: 'stations' })
 
-module.exports = mongoose.model('stations', stationSchema);
+const Station = mongoose.model('stations', stationSchema);
+
+module.exports = { Station }

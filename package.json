@@ -4,11 +4,12 @@
   "description": "Logger for Shoutcast and ICEcast streams",
   "main": "index.js",
   "scripts": {
-    "test:server": "mocha server/tests/*.test.js",
+    "test:server": "mocha tests/*.test.js",
     "test:server-watch": "nodemon --exec \"npm test:server\"",
     "client": "npm run start --prefix client",
-    "server": "nodemon server/index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "server": "nodemon index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Dino Kraljeta",
   "license": "ISC",

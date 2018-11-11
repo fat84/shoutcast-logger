@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const config = require('./config');
-const setMetaListener= require('../utils/setMetaListener');
+const setMetaListener= require('./utils/setMetaListener');
 
 
 //set up mongoDB
@@ -20,6 +20,8 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json());
 
 require('./routes/auth')(app);
+require('./routes/stations')(app);
+require('./routes/songs')(app);
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('client/build'))

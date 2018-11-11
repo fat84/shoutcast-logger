@@ -8,7 +8,7 @@ module.exports = (app) => {
 	// entry point for creating new user
 	app.post('/api/auth/user', (req, res) => {
 		const data = _.pick(req.body, [
-			'first_name', 'last_name', 'username', 'joined', 'active', 'email', 'password'
+			'first_name', 'last_name', 'username', 'joined', 'active', 'email', 'password','stationIds'
 		]);
 		let user = new User(data);
 
@@ -23,7 +23,6 @@ module.exports = (app) => {
 
 		return User.findByCredentials(email, password).then(doc => {
 			return doc.generateAuthToken().then(token => {
-
 				res.header('x-auth', token).send(doc)
 			})
 		}).catch(e => res.status(400).send(e))

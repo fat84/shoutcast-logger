@@ -24,4 +24,6 @@ const songSchema = new Schema({
    }
 }, { collection: 'songs' });
 
-module.exports = mongoose.model('songs', songSchema);
+const Song = mongoose.model('songs', songSchema);
+
+module.exports = { Song }
