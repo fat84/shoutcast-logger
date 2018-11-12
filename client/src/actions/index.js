@@ -11,7 +11,7 @@ export const logIn = user => async dispatch => {
 }
 export const logOut = () => async dispatch => {
    const token = window.localStorage.getItem('x-auth');
-   const res = await axios.delete('/api/auth/logout', { 'headers': { 'x-auth': token } });
+   await axios.delete('/api/auth/logout', { 'headers': { 'x-auth': token } });
    window.localStorage.removeItem('x-auth');
    dispatch({type: types.LOGIN_USER, payload: false})
 }
@@ -30,7 +30,7 @@ export const fetchUser = () => async dispatch => {
 export const getStations = stationIds => async dispatch => {
    console.log(stationIds)
    const token = window.localStorage.getItem('x-auth');
-   const res = await axios.post('/api/stations', {stationIds}, { 'headers': { 'x-auth': token } });
+   const res = await axios.get('/api/stations', { 'headers': { 'x-auth': token } });
    dispatch({ type: types.GET_STATIONS, payload: res.data})
 }
 
