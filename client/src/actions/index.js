@@ -6,7 +6,6 @@ export const logIn = user => async dispatch => {
    const res = await axios.post('/api/auth/login', user);
    const { data } = res;
    window.localStorage.setItem('x-auth', res.headers['x-auth']);
-   console.log(data)
    dispatch({type: types.LOGIN_USER, payload: data})
 }
 export const logOut = () => async dispatch => {
@@ -18,7 +17,6 @@ export const logOut = () => async dispatch => {
 
 export const fetchUser = () => async dispatch => {
    const token = window.localStorage.getItem('x-auth');
-   console.log("TOKEN: ", token)
    if (token){
       const res = await axios.get('/api/auth/user', { 'headers': { 'x-auth': token } })
       dispatch({type: types.FETCH_USER, payload: res.data})
@@ -27,15 +25,20 @@ export const fetchUser = () => async dispatch => {
    }
 }
 
-export const getStations = stationIds => async dispatch => {
-   console.log(stationIds)
+export const getStations = () => async dispatch => {
    const token = window.localStorage.getItem('x-auth');
    const res = await axios.get('/api/stations', { 'headers': { 'x-auth': token } });
    dispatch({ type: types.GET_STATIONS, payload: res.data})
 }
 
-export const getSongsFromStation = _id => async dispatch => {
+export const getSongsFromStation = id => async dispatch => {
    const token = window.localStorage.getItem('x-auth');
-   const res = await axios.post('/api/songs', {_id}, { 'headers': { 'x-auth': token } });
+   const res = await axios.get(`/api/songs/${id}`, { 'headers': { 'x-auth': token } });
    dispatch({ type: types.GET_SONGS_FROM_STATION, payload: res.data})
+}
+
+export const deleteStation = id => async dispatch => {
+   const token = window.localStorage.getItem('x-auth');
+   const res = await axios.delete(`/api/stations/${id}`, { 'headers': { 'x-auth': token } });
+   dispatch({type: types.UPDATE_USER, payload: res.data});
 }

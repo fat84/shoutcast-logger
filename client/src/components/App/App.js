@@ -8,13 +8,19 @@ import Stations from '../views/Stations';
 import Songs from '../views/Songs';
 import Header from '../Header/Header';
 import PrivateRoute from '../HOC/PrivateRoute';
-import { fetchUser } from '../../actions';
+import { fetchUser, getStations } from '../../actions';
 
 const Landing = () => <p>landing</p>
 
 class App extends Component {
 	componentDidMount(){
 		this.props.fetchUser()
+	}
+
+	componentWillReceiveProps(nextProps){
+		if(nextProps.user){
+			this.props.getStations()
+		}
 	}
 
 	render() {
@@ -36,4 +42,8 @@ class App extends Component {
 	}
 }
 
-export default connect(null, { fetchUser })(App);
+function mapStateToProps({user}){
+	return { user }
+}
+
+export default connect(mapStateToProps, { fetchUser, getStations })(App);

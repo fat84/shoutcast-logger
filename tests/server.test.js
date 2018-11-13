@@ -172,3 +172,73 @@ describe('DELETE /api/auth/logout', () => {
 			})
 	})
 })
+
+describe('GET /api/stations', () => {
+	it('should return stations of active user', (done) => {
+		request(app)
+			.get('/api/stations')
+			.set('x-auth', users[0].tokens[0].token)
+			.expect(200)
+			.expect((res) => {
+				expect(res.body.length).toBeGreaterThan(0);
+				expect(res.body[0]._id).toBe(users[0].stationIds[0]);
+				expect(res.body[0]._id).not.toBe(users[1].stationIds[0]);
+			})
+			.end(done)
+	})
+	
+	it('should return 401 if user not authenticated', (done) => {
+		request(app)
+			.get('/api/stations')
+			.expect(401)
+			.end(done)
+	})
+})
+
+describe('DELETE /api/stations', () => {
+	it('should remove station id from user stations array', (done) => {
+		request(app)
+			.delete(`/api/stations/${users[0].stationIds[0]}`)
+			.set('x-auth', users[0].tokens[0].token)
+			.expect(200)
+			.expect((res) => {
+				expect(res.body.email).toBe(users[0].email);
+				expect(res.body.stationIds).toHaveLength(2);
+				expect(res.body.stationIds).not.toEqual(users[0].stationIds);
+				expect(res.body.stationIds).toEqual(
+					expect.not.arrayContaining([users[0].stationIds[0]]),
+				)
+			})
+			.end(done)
+	})
+	
+	it('should return 401 if user not authenticated', (done) => {
+		request(app)
+			.delete(`/api/stations/${users[0].stationIds[0]}`)
+			.expect(401)
+			.end(done)
+	})
+})
+
+
+
+describe('GET /api/songs', () => {
+	it('should return songs from station', (done) => {
+		request(app)
+			.get(`/api/songs/${users[0].stationIds[0]}`)
+			.set('x-auth', users[0].tokens[0].token)
+			.expect(200)
+			.expect((res) => {
+				expect(res.body.length).toBeGreaterThan(0);
+				expect(res.body[0].stationId).toBe(users[0].stationIds[0]);
+			})
+			.end(done)
+	})
+	
+	it('should return 401 if user not authenticated', (done) => {
+		request(app)
+			.get(`/api/songs/${users[0].stationIds[0]}`)
+			.expect(401)
+			.end(done)
+	})
+})

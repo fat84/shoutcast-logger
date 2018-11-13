@@ -82,12 +82,19 @@ UserSchema.methods.generateAuthToken = function () {
 // method that removes tokend that is used to validate auth
 UserSchema.methods.removeToken = function(token) {
 	let user = this;
-
+	
 	return user.updateOne({
 		$pull: {
 			tokens: { token }
 		}
 	})
+}
+
+// method that adds station id to station id array of user
+UserSchema.methods.addStation = function(station) {
+	let user = this;
+	const { _id } = station
+	return user.updateOne({ $addToSet: { stationIds: _id } })
 }
 
 // method that finds user by token property

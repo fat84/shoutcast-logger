@@ -16,7 +16,7 @@ class LogIn extends Component {
       this.handleSubmit = this.handleSubmit.bind(this);
    }
    componentWillReceiveProps(newProps){
-         if (newProps.user.email){
+         if (newProps.user){
             this.props.history.push('/dashboard')
          }
    }

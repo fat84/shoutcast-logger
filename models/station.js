@@ -9,8 +9,9 @@ const stationSchema = new Schema({
     },
     url: {
        type: String,
-       required: true
-    },
+       required: true,
+       unique: true
+    }
 }, { collection: 'stations' })
 
 const Station = mongoose.model('stations', stationSchema);

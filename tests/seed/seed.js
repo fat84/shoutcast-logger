@@ -29,9 +29,9 @@ const users = [{
 	email: 'test2@test.com',
 	password: 'userTwoPass',
 	stationIds: [
-		 "5be570329d81dab4e445172b",
 		 "5be5705d9d81dab4e4451aa4",
-		 "5be570829d81dab4e4451dce"
+		 "5be570829d81dab4e4451dce",
+		 "5be570329d81dab4e445172b"
 	],
 	tokens: [{
 		access: 'auth',

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { getSongsFromStation } from '../../actions'
 
 const Songs = props => {
-   const handleClick = _id => {
-		props.getSongsFromStation(_id)
+   const handleClick = id => {
+		props.getSongsFromStation(id)
 	}
 	const renderButtons = () => {
 		if (props.stations){

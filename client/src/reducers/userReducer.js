@@ -1,4 +1,4 @@
-import {LOGIN_USER, LOGOUT_USER, FETCH_USER} from '../actions/types';
+import {LOGIN_USER, LOGOUT_USER, FETCH_USER, UPDATE_USER} from '../actions/types';
 
 export default function (state = null, action) {
 
@@ -7,6 +7,9 @@ export default function (state = null, action) {
 			return action.payload;
 
 		case LOGOUT_USER:
+			return action.payload;
+
+		case UPDATE_USER:
 			return action.payload;
 
 		case FETCH_USER:

@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const config = require('./config');
 const setMetaListener= require('./utils/setMetaListener');
 
@@ -15,9 +16,13 @@ mongoose.connect(config.mongoUri, { useNewUrlParser: true });
 //setMetaListener();
 
 // set up server
+const corsOptions = {
+  exposedHeaders: 'Authorization',
+};
 const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
 
 require('./routes/auth')(app);
 require('./routes/stations')(app);
