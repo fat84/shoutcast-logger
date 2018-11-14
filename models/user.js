@@ -91,10 +91,11 @@ UserSchema.methods.removeToken = function(token) {
 }
 
 // method that adds station id to station id array of user
-UserSchema.methods.addStation = function(station) {
-	let user = this;
-	const { _id } = station
-	return user.updateOne({ $addToSet: { stationIds: _id } })
+UserSchema.statics.addStation = function(station, userId){
+	let User = this;
+	const { _id } = station;
+
+	return User.findByIdAndUpdate(userId, { $addToSet: { stationIds: _id } }, {new: true})
 }
 
 // method that finds user by token property

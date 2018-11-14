@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const axios = require('axios');
 const request = require('request');
 const { Station } = require('../models/station');
+const { User } = require('../models/user');
 const { authenticate } = require('../middleware/authenticate');
 
 module.exports = (app) => {
@@ -30,19 +31,22 @@ module.exports = (app) => {
 	app.post('/api/stations/add', authenticate, (req, res) => {
 		const { url, name } = req.body;
 		request.head(url, function (error, response, body) {
-			const contentType = response.headers['content-type'];
-			if(contentType.includes('audio')){
+			let contentType;
+			if (response) contentType = response.headers['content-type'];
+			if(contentType && contentType.includes('audio')){
 				const station = new Station({url, name})
 				station.save()
-					.then(doc => req.user.addStation(doc._id))
-					.then(user => res.send(user))
+					.then(doc => User.addStation(doc._id, req.user._id))
+					.then(user => res.status(200).send(user))
 					.catch(e => {
 						if (e.code === 11000) {
-							Station.findOne({ url }, {'_id': 1}).then(id => req.user.addStation(id).then(user => res.send(user)))
+							Station.findOne({ url }, {'_id': 1})
+								.then(id => User.addStation(id, req.user._id))
+								.then(user => res.status(200).send(user))
 						}
 					})
 			} else {
-				res.send({error: "URL provided is not a stream source"})
+				res.status(400).send({error: "URL provided is not a stream source"})
 			}
 		});
 	})

@@ -6,25 +6,19 @@
  */
 
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import { deleteStation } from '../../actions';
+import { addStation } from '../../actions';
 
 class Stations extends Component {
 	constructor(props){
 		super(props);
 		this.state= { name: '', url: '' }
-      this.handleName = this.handleName.bind(this);
-      this.handleUrl = this.handleUrl.bind(this);
+      this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-   handleName(event) {
-		console.log(event.target.value)
-      this.setState({name: event.target.value});
-   }
-   handleUrl(event) {
-      this.setState({url: event.target.value});
+   handleChange(event, key) {
+      this.setState({[key]: event.target.value});
    }
 
    handleSubmit(event) {
@@ -33,13 +27,7 @@ class Stations extends Component {
       if (!url.includes('http://')){
          url = 'http://' + url;
       }
-      const header = axios.head(url,{
-         'headers': { 'User-Agent': 'Mozilla/5.0' }
-         })
-         .then(res => res.headers['content-type'])
-         .catch(e => console.log(e))
-      
-      console.log(header)
+      this.props.addStation({name, url})
    }
 
 	render(){
@@ -47,12 +35,12 @@ class Stations extends Component {
          <form onSubmit={this.handleSubmit}>
             <label>
                name:
-               <input type="text" value={this.state.name} onChange={this.handleName}/>
+               <input type="text" value={this.state.name} onChange={e => this.handleChange(e, 'name')}/>
             </label>
             &emsp;
             <label>
                url:
-               <input type="text" value={this.state.url} onChange={this.handleUrl}/>
+               <input type="text" value={this.state.url} onChange={e => this.handleChange(e, 'url')}/>
             </label>
             <input type="submit" value="add"/>
          </form>
@@ -62,4 +50,4 @@ class Stations extends Component {
 }
 
 
-export default connect(null, { deleteStation })(Stations);
+export default connect(null, { addStation })(Stations);

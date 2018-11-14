@@ -15,8 +15,8 @@ const Stations = props => {
 				<ul>
 					{props.stations.map(s => (
 						<li key={s._id}>
-							<button onClick={() => handleClick(s._id)} type="button">REMOVE</button>
-							{s.name}
+							<button onClick={() => handleClick(s._id)} type="button">DEL</button>
+							 [{s.name}]
 						</li>
 					))}
 				</ul>

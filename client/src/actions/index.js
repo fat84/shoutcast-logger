@@ -42,3 +42,10 @@ export const deleteStation = id => async dispatch => {
    const res = await axios.delete(`/api/stations/${id}`, { 'headers': { 'x-auth': token } });
    dispatch({type: types.UPDATE_USER, payload: res.data});
 }
+
+export const addStation = station => async dispatch => {
+   const token = window.localStorage.getItem('x-auth');
+   const res = await axios.post('/api/stations/add', station, { 'headers': { 'x-auth': token } })
+   console.log(res.data)
+   dispatch({type: types.UPDATE_USER, payload: res.data})
+}
